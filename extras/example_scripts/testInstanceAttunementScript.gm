@@ -1,0 +1,16 @@
+global TestAttunementForSomeInstance = function(plr)
+{
+    // check for a quest
+    if(plr.HasFinishedQuest(some_quest_id) == 1 && plr.IsGroupLeader())
+    {
+        if(plr.GetStandingRank(some_faction) >= 5)	// HONORED
+        {
+            return 1;
+        }
+    }
+    plr.BroadcastMessage("You do not have the required attunement to enter this instance. j00 suck!");
+    return 0;
+}
+
+// register in script system
+.RegisterAreaTriggerEvent(some_areatrigger_id);

@@ -1,0 +1,206 @@
+global TheAttackOnAccept = function(qst_giver, plr)
+{
+  // Get the spybot
+  spybot = GetUnitBySqlId(346820);
+  
+  // Create the waypoints for the spybot.
+  spybot.CreateCustomWaypointMap();
+  spybot.CreateWaypoint(-8410.431641, 457.055817, 123.760651, 1.392215, 0, 0, 0);
+  spybot.CreateWaypoint(-8401.916992, 464.665833, 123.760651, 5.366333, 0, 0, 0);
+  spybot.CreateWaypoint(-8389.958984, 449.401276, 124.274651, 5.393821, 0, 0, 0);
+  spybot.CreateWaypoint(-8381.959961, 439.551880, 122.275040, 5.397748, 0, 0, 0);
+  spybot.CreateWaypoint(-8357.066406, 407.778656, 122.275040, 5.382041, 0, 0, 0);
+  spybot.CreateWaypoint(-8364.190430, 396.291443, 122.275040, 4.337465, 0, 0, 0);
+  spybot.CreateWaypoint(-8352.381836, 381.048798, 122.275040, 5.378114, 0, 0, 0);
+  spybot.CreateWaypoint(-8339.490234, 391.532257, 122.275040, 0.692429, 0, 0, 0);
+
+  // Returning to spawn waypoints.
+  spybot.CreateWaypoint(-8352.579102, 383.512268, 122.274673, 3.697542, 0, 0, 0);
+  spybot.CreateWaypoint(-8364.250000, 398.464630, 122.274673, 2.233560, 0, 0, 0);
+  spybot.CreateWaypoint(-8359.034180, 409.916809, 122.274673, 1.143427, 0, 0, 0);
+  spybot.CreateWaypoint(-8384.680664, 443.614441, 122.274673, 2.225706, 0, 0, 0);
+  spybot.CreateWaypoint(-8408.173828, 423.703949, 122.274673, 3.838914, 0, 0, 0);
+  spybot.CreateWaypoint(-8427.309570, 447.619080, 122.274673, 2.254096, 0, 0, 0);
+  spybot.CreateWaypoint(-8419.624023, 454.155029, 123.760353, 0.671538, 0, 0, 0);
+  spybot.CreateWaypoint(-8408.160156, 451.928131, 123.760353, 5.863086, 0, 0, 0);
+
+  // Send text from quest giver
+  spybot.SendChatMessage("By your command!");
+  qst_giver.SendChatMessage("Wait here, $N. Spybot will make Lescovar come out as soon as possible. Be ready! Attack only after you've overheard their conversation.");
+
+  // change the spybots appearance
+  spybot.ChangeEntry(7779);
+  spybot.ChangeScale(1.0);
+  spybot.ChangeModel(6703);
+};
+
+global SpybotDialog = function(mob, greg, phase)
+{
+  newphase = 0;
+  if(phase == 1)
+  {
+    mob.SendChatMessageAltEntry(7779. "Milord, your guest has arrived. He awaits your presence.");
+    mob.Emote(1);
+    newphase = 2;
+  }
+  
+  if(phase == 2)
+  {
+    greg.SendChatMessage("Ah, thank you kindly. I will leave you to the library while I tend to this small matter.");
+    greg.Emote(1);
+    newphase = 3;
+  }
+
+  if(phase == 3)
+  {
+    mob.SendChatMessageAltEntry(7779, "I shall use the time wisely, milord. Thank you.");
+    mob.Emote(1);
+  }
+  
+  if(newphase != 0)
+  {
+    mob.RegisterEvent(1000, SpybotDialog, mob, greg, newphase);
+  }
+};
+
+global DefiasDialog = function(greg, defias, phase)
+{
+  newphase = 0;
+  if(phase == 1)
+  {
+    greg.SendChatMessage("There you are. What news from Westfall?");
+    greg.Emote(1);
+    newphase = 2;
+  }
+
+  if(phase == 2)
+  {
+    defias.SendChatMessage("VanCleef sends word that the plans are underway. But he's heard rumors about someone snooping about.");
+    defias.Emote(1);
+    newphase = 3;
+  }
+
+  if(phase == 3)
+  {
+    greg.SendChatMessage("Hmm, it could be that meddler Shaw. I will see what I can disover. Be off with you. I'll contact you again soon...");
+    greg.Emote(1);
+    newphase = 4;
+  }
+
+  if(phase == 4)
+  {
+    defias.SendChatMessage("Very well. I will return then.");
+    defias.Emote(1);
+    newphase = 5;
+  }
+
+  if(phase == 5)
+  {
+    greg.ChangeFaction(1);
+    defias.ChangeFaction(1);
+
+    tyr = GetUnitBySqlId(0);
+    tyr.SendChatMessage("That's it! That's what you were waiting for! KILL THEM!");
+    tyr.Emote(23);
+  }
+    
+  if(newphase != 0)
+  {
+    greg.RegisterEvent(1000, DeEiasDialog, greg, defias, newphase);
+  }
+};
+
+global GuardReplyOne = function(mob)
+{
+  // Send the message reply.
+  mob.SendChatMessage("Of course. He awaits you in the library.");
+};
+
+global GuardReplyTwo = function(guardleft, guardright)
+{
+  guardleft.CreateCustomWaypointMap();
+  guardleft.CreateWaypoint(-8390.627930, 451.819031, 123.760353, 5.329803, 0, 0, 0);
+  guardleft.CreateWaypoint(-8383.811523, 443.529877, 122.274994, 5.400488, 0, 0, 0);
+  guardleft.CreateWaypoint(-8357.219727, 411.144958, 122.274994, 5.396562, 0, 0, 0);
+  guardleft.CreateWaypoint(-8354.653320, 413.238251, 122.274994, 5.396562, 0, 0, 0);
+  guardleft.StopMovement(1500);
+  guardleft.Emote(66);
+  guardleft.SendChatMessage("Yes, sir!");
+  guardleft.SetMovementType(11);
+
+  guardright.CreateCustomWaypointMap();
+  guardright.CreateWaypoint(-8392.544922, 451.228302, 123.759888, 5.374578, 0, 0, 0);
+  guardright.CreateWaypoint(-8385.729492, 442.486969, 122.274780, 5.374577, 0, 0, 0);
+  guardright.CreateWaypoint(-8359.517578, 408.865295, 122.274780, 5.374577, 0, 0, 0);
+  guardright.CreateWaypoint(-8362.452148, 406.578064, 122.274780, 5.374577, 0, 0, 0);
+  guardright.StopMovement(1500);
+  guardright.Emote(66);
+  guardright.SendChatMessage("Yes, sir!");
+  guardright.SetMovementType(11);
+};
+
+global PrincessReplyOne = function(mob)
+{
+  mob.SendChatMessage("Thank you. The Light be with you both.");
+};
+
+global OnSpybotReachWaypoint = function(waypoint_id)
+{
+  // we reached the guards?
+  if(waypoint_id == 4)
+  {
+    guard = GetUnitBySqlId(346822);
+
+    // Chat Message
+    RegisterEvent(1000, GuardReplyOne, guard);
+    RegisterEvent(2000, PrincessReplyOne, this);
+    .HaltMovement(2000);
+  }
+    
+  // Are we at the end of our course?
+  if(waypoint_id == 8)
+  {
+    // Halt our movement for 2 minutes, this gives enough time to finish talking
+    // and then we return back to our spawn.
+    .HaltMovement(120000);
+
+    // Start the dialog
+    greg = GetUnitBySqlId(346686);
+    SpybotDialog(this, greg, 1);
+  }
+
+  // returned back to spawn
+  if(waypoint_id == 16)
+  {
+    // return stuff back to normal
+    .ChangeEntry(8856);
+    .ChangeScale(0.4);
+    .ChangeModel(1159);
+    .HaltMovement(1000);
+    .DestroyCustomWaypointMap();
+  }
+};
+
+global OnGregReachWaypoint = function(waypoint_id)
+{
+  if(waypoint_id == 3)
+  {
+    guardleft = GetUnitBySqlId(346822);
+    guardright = GetUnitBySqlId(346821);
+
+    // Guard speech
+    .RegisterEvent(1000, GuardReplyTwo, guardleft, guardright);
+    .SendChatMessage("It's time for my meditation, leave me.");
+    .HaltMovement(3000);
+  }
+
+  if(waypoint_id == 5)
+  {
+    // Spawn Defias Dude
+    defias = Spawn();
+
+    // Start the dialog after 3 seconds (when he reaches his wp)
+    .RegisterEvent(3000, DefiasDialog, this, defias, 1);
+  }
+
+.RegisterQuestEvent(434, 2, TheAttackOnAccept);

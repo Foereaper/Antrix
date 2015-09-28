@@ -1,0 +1,8 @@
+global TestTrigger = function(plr)
+{
+   plr.SendAreaTriggerMessage("moo moo");
+   return 0;
+};
+
+// registration
+this.RegisterAreaTriggerEvent(101, TestTrigger);

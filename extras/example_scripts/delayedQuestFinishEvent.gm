@@ -1,0 +1,30 @@
+/** This registers a 2 second delayed event on the creature.
+  * The event sends another message adds item 85 to the player,
+  * and makes the NPC bow. This demonstrates the variable nature
+  * of argument passing for callback functions and the sorta cool
+  * stuff you can do with them :)
+  */
+
+global EventCallback = function(qst_giver, plr, item_id)
+{
+   // String parameters..
+   qst_giver.SendChatMessage("Wooot?");
+
+   // Yay, we can use our passed arguments as arguments in other calls! :D
+   plr.AddItem(item_id, 1);
+
+   // Or normal int parameters
+   qst_giver.Emote(2);	// EMOTE_ONESHOT_BOW
+};
+
+global QuestTest = function(qst_giver, plr)
+{
+   qst_giver.SendChatMessage("Finished? I don't think so.");
+
+   // This function is called in this way:
+   //    <unit/player>.RegisterEvent(<time>, <callback function>, <arguments, if any>);
+   //
+   qst_giver.RegisterEvent(2000, EventCallback, qst_giver, plr, 85);
+};
+
+.RegisterQuestEvent(783, 2, QuestTest);
