@@ -402,8 +402,8 @@ void WorldLog::LogPacket(uint32 len, uint16 opcode, const uint8* data, uint8 dir
 		uint16 lenght = len;
 		unsigned int count = 0;
 
-		log->AddFormat("{%s} Packet: (0x%04X) %s PacketSize = %u\n", (direction ? "SERVER" : "CLIENT"), opcode,
-			LookupName(opcode, g_worldOpcodeNames), lenght);
+        log->AddFormat("{%s} Packet: (0x%04X) %s PacketSize = %u\n", (direction ? "SERVER" : "CLIENT"), opcode,
+            LookupOpcodeName(opcode), lenght);
 		log->Add("|------------------------------------------------|----------------|\n");
 		log->Add("|00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F |0123456789ABCDEF|\n");
 		log->Add("|------------------------------------------------|----------------|\n");

@@ -1382,32 +1382,31 @@ void World::SendWorldWideScreenText(const char *text, WorldSession *self)
 	SendGlobalMessage(&data, self);
 }
 
-void World::UpdateSessions(uint32 diff)
+void World::UpdateSessions(uint32 /*diff*/)
 {
-	SessionSet::iterator itr, it2;
-	WorldSession *session;
-	int result;
-	for(itr = Sessions.begin(); itr != Sessions.end();)
-	{
-		session = (*itr);
-		it2 = itr;
-		++itr;
-		if(!session || session->GetInstance() != 0)
-		{
-			Sessions.erase(it2);
-			continue;
-		}
+    int result;
+    for (SessionSet::iterator itr = Sessions.begin(), next; itr != Sessions.end(); itr = next)
+    {
+        next = itr;
+        ++next;
 
-		if((result = session->Update(0)))
-		{
-			if(result == 1)
-			{
-				// complete deletion
-				DeleteSession(session);
-			}
-			Sessions.erase(it2);
-		}
-	}
+        WorldSession* session = (*itr);
+        WorldSessionFilter updater(session);
+
+        if (!session || session->GetInstance() != 0)
+        {
+            Sessions.erase(itr);
+            continue;
+        }
+
+        if ((result = session->Update(0, updater)))
+        {
+            if(result == 1)
+                DeleteSession(session);
+
+            Sessions.erase(itr);
+        }
+    }
 }
 
 std::string World::GenerateName(uint32 type)

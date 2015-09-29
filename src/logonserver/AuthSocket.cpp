@@ -18,7 +18,7 @@ enum _errors
 	CE_WRONG_BUILD_NUMBER=0x09,						 //Unable to validate game version.  This may be caused by file corruption or the interference of another program.
 	CE_UPDATE_CLIENT=0x0a,
 	CE_ACCOUNT_FREEZED=0x0c
-} ; 
+};
 
 AuthSocket::AuthSocket(SOCKET fd) : Socket(fd, 32768, 4096)
 {
@@ -59,11 +59,11 @@ void AuthSocket::HandleChallenge()
 		return;	
 
 	// Check the rest of the packet is complete.
-	uint8 * ReceiveBuffer = this->GetReadBuffer(0);
+	uint8* ReceiveBuffer = this->GetReadBuffer(0);
 	uint16 full_size = *(uint16*)&ReceiveBuffer[2];
 	sLog.outDetail("[AuthChallenge] got header, body is 0x%02X bytes", full_size);
 
-	if(GetReadBufferSize() < uint32(full_size+4))
+	if(GetReadBufferSize() < uint32(full_size + 4))
 		return;
 
 	// Copy the data into our cached challenge structure
@@ -155,9 +155,9 @@ void AuthSocket::HandleChallenge()
 	response[c] = 0;										c += 1;
 	response[c] = CE_SUCCESS;								c += 1;
 	memcpy(&response[c], B.AsByteArray(), 32);				c += 32;
-	response[c] = 1;										c += 1;
+	response[c] = uint8(1);									c += 1;
 	response[c] = g.AsByteArray()[0];						c += 1;
-	response[c] = 32;										c += 1;
+	response[c] = uint8(32);								c += 1;
 	memcpy(&response[c], N.AsByteArray(), 32);				c += 32;
 	memcpy(&response[c], s.AsByteArray(), s.GetNumBytes()); c += s.GetNumBytes();
 	memcpy(&response[c], unk.AsByteArray(), 16);			c += 16;

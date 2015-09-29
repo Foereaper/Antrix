@@ -7,15 +7,15 @@
 #ifndef _OPCODES_H
 #define _OPCODES_H
 
-// NOTE: All SERVER opcodes are now uint16's, as of patch 4 (3807/0.9.0)
-//	   Client opcodes are still uint32 as far as we know.
-//1.8.0 client opcodes
-
-enum Opcodes {
-	MSG_NULL_ACTION                              = 0,	//(0x0000)
-	CMSG_BOOTME                                  = 1,	//(0x0001)
-	CMSG_DBLOOKUP                                = 2,	//(0x0002)
-	SMSG_DBLOOKUP                                = 3,	//(0x0003)
+/**
+ * Opcodes for server & client communication
+ */
+enum Opcodes
+{
+	MSG_NULL_ACTION                              = 0x000,
+	CMSG_BOOTME                                  = 0x001,
+	CMSG_DBLOOKUP                                = 0x002,
+	SMSG_DBLOOKUP                                = 0x003,
 	CMSG_QUERY_OBJECT_POSITION                   = 4,	//(0x0004)
 	SMSG_QUERY_OBJECT_POSITION                   = 5,	//(0x0005)
 	CMSG_QUERY_OBJECT_ROTATION                   = 6,	//(0x0006)
@@ -63,16 +63,16 @@ enum Opcodes {
 	CMSG_DISABLE_PVP_CHEAT                       = 48,	//(0x0030)
 	CMSG_ADVANCE_SPAWN_TIME                      = 49,	//(0x0031)
 	CMSG_PVP_PORT_OBSOLETE                       = 50,	//(0x0032)
-	CMSG_AUTH_SRP6_BEGIN                         = 51,	//(0x0033)
-	CMSG_AUTH_SRP6_PROOF                         = 52,	//(0x0034)
-	CMSG_AUTH_SRP6_RECODE                        = 53,	//(0x0035)
-	CMSG_CHAR_CREATE                             = 54,	//(0x0036)
-	CMSG_CHAR_ENUM                               = 55,	//(0x0037)
-	CMSG_CHAR_DELETE                             = 56,	//(0x0038)
-	SMSG_AUTH_SRP6_RESPONSE                      = 57,	//(0x0039)
-	SMSG_CHAR_CREATE                             = 58,	//(0x003A)
-	SMSG_CHAR_ENUM                               = 59,	//(0x003B)
-	SMSG_CHAR_DELETE                             = 60,	//(0x003C)
+	CMSG_AUTH_SRP6_BEGIN                         = 0x033,
+	CMSG_AUTH_SRP6_PROOF                         = 0x034,
+	CMSG_AUTH_SRP6_RECODE                        = 0x035,
+	CMSG_CHAR_CREATE                             = 0x036,
+	CMSG_CHAR_ENUM                               = 0x037,
+	CMSG_CHAR_DELETE                             = 0x038,
+	SMSG_AUTH_SRP6_RESPONSE                      = 0x039,
+	SMSG_CHAR_CREATE                             = 0x03A,
+	SMSG_CHAR_ENUM                               = 0x03B,
+	SMSG_CHAR_DELETE                             = 0x03C,
 	CMSG_PLAYER_LOGIN                            = 61,	//(0x003D)
 	SMSG_NEW_WORLD                               = 62,	//(0x003E)
 	SMSG_TRANSFER_PENDING                        = 63,	//(0x003F)
@@ -488,8 +488,8 @@ enum Opcodes {
 	SMSG_START_MIRROR_TIMER                      = 473,	//(0x01D9)
 	SMSG_PAUSE_MIRROR_TIMER                      = 474,	//(0x01DA)
 	SMSG_STOP_MIRROR_TIMER                       = 475,	//(0x01DB)
-	CMSG_PING                                    = 476,	//(0x01DC)
-	SMSG_PONG                                    = 477,	//(0x01DD)
+	CMSG_PING                                    = 0x1DC,
+	SMSG_PONG                                    = 0x1DD,
 	SMSG_CLEAR_COOLDOWN                          = 478,	//(0x01DE)
 	SMSG_GAMEOBJECT_PAGETEXT                     = 479,	//(0x01DF)
 	CMSG_SETSHEATHED                             = 480,	//(0x01E0)
@@ -504,9 +504,9 @@ enum Opcodes {
 	MSG_GM_SUMMON                                = 489,	//(0x01E9)
 	SMSG_ITEM_TIME_UPDATE                        = 490,	//(0x01EA)
 	SMSG_ITEM_ENCHANT_TIME_UPDATE                = 491,	//(0x01EB)
-	SMSG_AUTH_CHALLENGE                          = 492,	//(0x01EC)
-	CMSG_AUTH_SESSION                            = 493,	//(0x01ED)
-	SMSG_AUTH_RESPONSE                           = 494,	//(0x01EE)
+	SMSG_AUTH_CHALLENGE                          = 0x1EC,
+	CMSG_AUTH_SESSION                            = 0x1ED,
+	SMSG_AUTH_RESPONSE                           = 0x1EE,
 	MSG_GM_SHOWLABEL                             = 495,	//(0x01EF)
 	MSG_ADD_DYNAMIC_TARGET_OBSOLETE              = 496,	//(0x01F0)
 	MSG_SAVE_GUILD_EMBLEM                        = 497,	//(0x01F1)
@@ -868,69 +868,40 @@ enum Opcodes {
 	NUM_MSG_TYPES                                = 956,	//(0x03BC)
 };
 
-enum FriendsResult {
-	FRIEND_DB_ERROR		 = 0x00,
-	FRIEND_LIST_FULL		= 0x01,
-	FRIEND_ONLINE		   = 0x02,
-	FRIEND_OFFLINE		  = 0x03,
-	FRIEND_NOT_FOUND		= 0x04,
-	FRIEND_REMOVED		  = 0x05,
-	FRIEND_ADDED_ONLINE	 = 0x06,
-	FRIEND_ADDED_OFFLINE	= 0x07,
-	FRIEND_ALREADY		  = 0x08,
-	FRIEND_SELF			 = 0x09,
-	FRIEND_ENEMY			= 0x0A,
-	FRIEND_IGNORE_FULL	  = 0x0B,
-	FRIEND_IGNORE_SELF	  = 0x0C,
-	FRIEND_IGNORE_NOT_FOUND = 0x0D,
-	FRIEND_IGNORE_ALREADY   = 0x0E,
-	FRIEND_IGNORE_ADDED	 = 0x0F,
-	FRIEND_IGNORE_REMOVED   = 0x10
+enum SessionStatus
+{
+    STATUS_AUTHED = 0,                     ///< Player authenticated (_player==NULL, m_playerRecentlyLogout = false or will be reset before handler call)
+    STATUS_LOGGEDIN,                       ///< Player in game (_player!=NULL, inWorld())
+    STATUS_TRANSFER,                       ///< Player transferring to another map (_player!=NULL, !inWorld())
+    STATUS_LOGGEDIN_OR_RECENTLY_LOGGEDOUT, ///< _player!= NULL or _player==NULL && m_playerRecentlyLogout)
+    STATUS_NEVER,                          ///< Opcode not accepted from client (deprecated or server side only)
+    STATUS_UNHANDLED                       ///< We don' handle this opcode yet
 };
 
-
-/*
-0 = Universal
-1 = ?Orcish?
-2 = Darnassian
-3 = Taurahe
-4 = ?
-5 = ?
-6 = Dwarvish
-7 = Common
-8 = Demonic
-9 = Titan
-10 = Thelassian
-11 = Draconic
-12 = Kalimag
-13 = Gnomish
-14 = Troll
-*/
-
-
-enum NPCFlags {
-	UNIT_NPC_FLAG_NONE			  = 0,	// None
-	UNIT_NPC_FLAG_GOSSIP			= 1,	// Gossip/Talk (CMSG_GOSSIP_HELLO, ?)
-	UNIT_NPC_FLAG_QUESTGIVER		= 2,	// Questgiver
-	UNIT_NPC_FLAG_VENDOR			= 4,	// Vendor (CMSG_LIST_INVENTORY, SMSG_LIST_INVENTORY)
-	UNIT_NPC_FLAG_TAXIVENDOR		= 8,	// Taxi Vendor (CMSG_TAXIQUERYAVAILABLENODES, SMSG_SHOWTAXINODES)
-	UNIT_NPC_FLAG_TRAINER		   = 16,   // Trainer (CMSG_TRAINER_LIST, SMSG_TRAINER_LIST)
-	UNIT_NPC_FLAG_SPIRITHEALER	  = 32,   // Spirithealer (CMSG_BINDER_ACTIVATE, ?)
-	UNIT_NPC_FLAG_INNKEEPER		 = 128,  // Innkeeper Asking for Bind Point
-	UNIT_NPC_FLAG_BANKER			= 256,  // Banker
-	UNIT_NPC_FLAG_ARENACHARTER	  = 512,  // Purchase an arena charter.. huh?
-	UNIT_NPC_FLAG_TABARDCHANGER	 = 1024, // Tabard Design Changer Flag
-	UNIT_NPC_FLAG_PETITIONER		= 1536, // Guild Master
-	UNIT_NPC_FLAG_TABARDVENDOR	  = 1540,
-	UNIT_NPC_FLAG_BATTLEFIELDPERSON = 2048, // BattleMaster (CMSG_BATTLEMASTER_HELLO (0x02D7))
-	UNIT_NPC_FLAG_AUCTIONEER		= 4096, // Auctioneer (MSG_AUCTION_HELLO)
-	UNIT_NPC_FLAG_STABLEMASTER	  = 8192, // (MSG_LIST_STABLED_PETS (0x026F))
-	UNIT_NPC_FLAG_ARMORER		   = 16384,// not sure
+enum PacketProcessing
+{
+    PROCESS_INPLACE = 0,   ///< process packet whenever we receive it - mostly for non-handled or non-implemented packets
+    PROCESS_THREADUNSAFE,  ///< packet is not thread-safe - process it in \ref World::UpdateSessions
+    PROCESS_THREADSAFE     ///< packet is thread-safe - process it in \ref Map::Update
 };
 
-//enum FieldFlags {
-//	0x00000008 == can't climb slopes too steep
-//	0x40000000 == sheathed
-//};
+class WorldPacket;
+
+struct OpcodeHandler
+{
+    char const* name;
+    SessionStatus status;
+    PacketProcessing packetProcessing;
+    void (WorldSession::*handler)(WorldPacket& recvPacket);
+};
+
+extern OpcodeHandler opcodeTable[NUM_MSG_TYPES];
+
+inline const char* LookupOpcodeName(uint16 id)
+{
+    if (id >= NUM_MSG_TYPES)
+        return "Received unknown opcode, it's more than max!";
+    return opcodeTable[id].name;
+}
 
 #endif

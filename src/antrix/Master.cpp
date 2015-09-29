@@ -260,9 +260,6 @@ bool Master::Run(int argc, char ** argv)
 	if(file_log_level != (int)DEF_VALUE_NOT_SET)
 		sLog.SetFileLoggingLevel(file_log_level);
 
-	// Initialize Opcode Table
-	WorldSession::InitPacketHandlerTable();
-
 	string host = Config.MainConfig.GetStringDefault("Listen", "Host", DEFAULT_HOST);
 	int wsport = Config.MainConfig.GetIntDefault("Listen", "WorldServerPort", DEFAULT_WORLDSERVER_PORT);
 

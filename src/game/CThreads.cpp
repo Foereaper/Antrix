@@ -7,7 +7,8 @@
 #include "ThreadMgr.h"
 
 /* Name tables */
-NameTableEntry g_threadStates[] = {
+NameTableEntry g_threadStates[] =
+{
 	{ THREADSTATE_TERMINATE, "STATE_TERM" },
 	{ THREADSTATE_PAUSED, "TSTATE_PAUSE" },
 	{ THREADSTATE_SLEEPING, "STATE_SLEEP" },
@@ -16,7 +17,8 @@ NameTableEntry g_threadStates[] = {
 	{ 0, NULL },
 };
 
-NameTableEntry g_threadTypes[] = {
+NameTableEntry g_threadTypes[] =
+{
 	{ THREADTYPE_UNASSIGNED, "UNASSIGNED" },
 	{ THREADTYPE_OBJECTUPDATER, "OBJECTUPDATER" },
 	{ THREADTYPE_MAPMGR, "MAPMGR" },

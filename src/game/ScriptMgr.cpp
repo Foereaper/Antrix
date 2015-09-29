@@ -401,7 +401,7 @@ void GossipScript::GossipHello(Creature* pCreature, Player* Plr, bool AutoSend)
 	if(flags & UNIT_NPC_FLAG_PETITIONER)
 		Menu->AddItem(0, "How do I create a guild?", 8);
 
-	if(flags & UNIT_NPC_FLAG_TABARDCHANGER)
+	if(flags & UNIT_NPC_FLAG_TABARDDESIGNER)
 		Menu->AddItem(0, "I want to create a guild crest.", 9);
 
 	/*if(flags & UNIT_NPC_FLAG_BATTLEFIELDPERSON)

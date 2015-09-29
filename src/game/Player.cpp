@@ -1982,13 +1982,10 @@ void Player::SaveToDB(bool bNewCharacter /* =false */)
 	<< (uint32)time(NULL) << ",";
 	
 	//online state
-	if(GetSession()->_loggingOut)
-	{
+	if (GetSession()->m_playerLogout)
 		ss << "0,";
-	}else
-	{
+	else
 		ss << "1,";
-	}
 
 	ss	 
 	<< m_bind_pos_x			 << ", "

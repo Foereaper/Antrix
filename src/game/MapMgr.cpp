@@ -1182,7 +1182,7 @@ void MapMgr::_PerformObjectDuties()
 	// Sessions are updated every loop.
 	{
 		int result;
-		WorldSession * session;
+		WorldSession* session;
 		SessionSet::iterator itr = Sessions.begin();
 		SessionSet::iterator it2;
 
@@ -1202,17 +1202,15 @@ void MapMgr::_PerformObjectDuties()
 			// If we abort in the handler, it means we will "lose" packets, or not process this.
 			// .. and that could be diasterous to our client :P
 			if(session->GetPlayer() && (session->GetPlayer()->GetMapMgr() != this && session->GetPlayer()->GetMapMgr() != 0))
-			{
 				continue;
-			}
 
-			if((result = session->Update(m_instanceID)))
+            MapSessionFilter updater(session);
+
+			if ((result = session->Update(m_instanceID, updater)))
 			{
 				if(result == 1)
-				{
-					// complete deletion
 					sWorld.DeleteSession(session);
-				}
+
 				Sessions.erase(it2);
 			}
 		}

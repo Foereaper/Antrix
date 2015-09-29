@@ -21,17 +21,7 @@ class Creature;
 class MovementInfo;
 struct TrainerSpell;
 
-struct OpcodeHandler
-{
-	uint16 status;
-	void (WorldSession::*handler)(WorldPacket& recvPacket);
-};
-
-enum SessionStatus
-{
-	STATUS_AUTHED = 0,
-	STATUS_LOGGEDIN
-};
+struct OpcodeHandler;
 
 struct AccountDataEntry
 {
@@ -131,6 +121,54 @@ void DecodeHex(const char* source, char* dest, uint32 size);
 
 extern OpcodeHandler WorldPacketHandlers[NUM_MSG_TYPES];
 void CapitalizeString(string& arg);
+
+// class to deal with packet processing
+// allows to determine if next packet is safe to be processed
+class PacketFilter
+{
+public:
+    explicit PacketFilter(WorldSession* pSession) : m_pSession(pSession) { }
+    virtual ~PacketFilter() { }
+
+    virtual bool Process(WorldPacket* /*packet*/)
+    {
+		return true;
+    }
+
+    virtual bool ProcessLogout() const
+    {
+        return true;
+    }
+
+protected:
+    WorldSession* const m_pSession;
+};
+
+// process only thread-safe packets in Map::Update()
+class MapSessionFilter : public PacketFilter
+{
+public:
+    explicit MapSessionFilter(WorldSession* pSession) : PacketFilter(pSession) { }
+    ~MapSessionFilter() { }
+
+    virtual bool Process(WorldPacket* packet) override;
+    // in Map::Update() we do not process player logout!
+    virtual bool ProcessLogout() const override
+    {
+        return false;
+    }
+};
+
+// class used to filer only thread-unsafe packets from queue
+// in order to update only be used in World::UpdateSessions()
+class WorldSessionFilter : public PacketFilter
+{
+public:
+    explicit WorldSessionFilter(WorldSession* pSession) : PacketFilter(pSession) { }
+    ~WorldSessionFilter() { }
+
+    virtual bool Process(WorldPacket* packet) override;
+};
 
 class SERVER_DECL WorldSession
 {
@@ -241,7 +279,7 @@ public:
 			_socket->Disconnect();
 	}
 
-	int __fastcall Update(uint32 InstanceID);
+	int __fastcall Update(uint32 InstanceID, PacketFilter& updater);
 
     void BuildItemPushResult(WorldPacket *data, uint64 guid, uint32 type, uint32 count, uint32 itemid, uint32 randomprop, uint8 unk = 0xFF, uint32 unk2 = 0, uint32 unk3 = 1, uint32 count_have = 0);
 	void SendBuyFailed(uint64 guid, uint32 itemid, uint8 error);
@@ -260,7 +298,12 @@ public:
 	void _HandleAreaTriggerOpcode(uint32 id);//real handle
 
 
-protected:
+public:
+
+    void Handle_NULL(WorldPacket& recvPacket);
+    void Handle_EarlyProccess(WorldPacket& recvPacket);
+    void Handle_ServerSide(WorldPacket& recvPacket);
+    void Handle_Deprecated(WorldPacket& recvPacket);
 
 	/// Login screen opcodes (PlayerHandler.cpp):
 	void HandleCharEnumOpcode(WorldPacket& recvPacket);
@@ -599,8 +642,6 @@ protected:
 	void HandlePartyMemberStatsOpcode(WorldPacket & recv_data);
 	void HandleSummonResponseOpcode(WorldPacket & recv_data);
 
-public:
-
 	void SendInventoryList(Creature* pCreature);
 	void SendTrainerList(Creature* pCreature);
 	void SendCharterRequest(Creature* pCreature);
@@ -641,12 +682,12 @@ private:
 	char *permissions;
 	int permissioncount;
 
-	bool _loggingOut;
+    bool m_playerRecentlyLoggedOut;
+    bool m_playerLogout;
 	uint32 _latency;
 	uint32 client_build;
 	uint32 instanceId;
 public:
-	static void InitPacketHandlerTable();
 
 	time_t packetThrottleTimeout;
 	uint32 packetThrottleCount;

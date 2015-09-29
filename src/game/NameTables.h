@@ -13,22 +13,21 @@
 
 struct NameTableEntry
 {
-	uint32 id;
-	const char *name;
+    uint32 id;
+    const char *name;
 };
 
 inline const char* LookupName(uint32 id, NameTableEntry *table)
 {
-	for(uint32 i = 0; table[i].name != 0; i++)
-	{
-		if (table[i].id == id)
-			return table[i].name;
-	}
+    for(uint32 i = 0; table[i].name != 0; i++)
+    {
+        if (table[i].id == id)
+            return table[i].name;
+    }
 
-	return "UNKNOWN";
+    return "UNKNOWN";
 }
 
-extern NameTableEntry g_worldOpcodeNames[];
 extern NameTableEntry g_logonOpcodeNames[];
 extern NameTableEntry g_pluginOpcodeNames[];
 
