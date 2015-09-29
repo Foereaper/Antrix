@@ -15,13 +15,13 @@ class LogonServer;
 class LogonServer : public Singleton< LogonServer >
 {
 public:
-	void CheckForDeadSockets();
-	void Run(int argc, char ** argv);
-	void Stop();
-	uint32 max_build;
-	uint32 min_build;
-	uint8 sql_hash[20];
+    void CheckForDeadSockets();
+    void Run(int argc, char ** argv);
+    void Stop();
+    uint32 max_build;
+    uint32 min_build;
+    uint8 sql_hash[20];
 
 private:
-	bool m_stopEvent;
+    bool m_stopEvent;
 };

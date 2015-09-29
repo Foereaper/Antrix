@@ -7,8 +7,8 @@ static char * REVISION_TEXT = "$Rev: 921 $";
 
 inline int g_getRevision()
 {
-	char * p = REVISION_TEXT + 6;
-	return atoi(p);
+    char * p = REVISION_TEXT + 6;
+    return atoi(p);
 }
 ///////////////////////////////////
 #endif

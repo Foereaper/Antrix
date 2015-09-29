@@ -21,10 +21,10 @@
 #define antrix_optional_argument      2
 struct antrix_option
 {
-	char *name;
-	int has_arg;
-	int *flag;
-	int val;
+    char *name;
+    int has_arg;
+    int *flag;
+    int val;
 };
 extern char antrix_optarg[514];
 int antrix_getopt_long_only (int ___argc, char *const *___argv, const char *__shortopts, const struct antrix_option *__longopts, int *__longind);

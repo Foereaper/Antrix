@@ -3,7 +3,7 @@
  * Copyright (c) 2007 Burlex
  *
  * Network.h - Include this file in your .cpp files to gain access
- *			 to features offered by this library.
+ *             to features offered by this library.
  *
  */
 

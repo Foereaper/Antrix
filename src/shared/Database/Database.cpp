@@ -22,36 +22,36 @@ void Database::CleanupLibs()
 
 QueryResult::QueryResult(uint32 FieldCount, uint32 RowCount, uint32 Type)
 {
-	mCurrentRow = new Field[FieldCount];
-	mRowCount = RowCount;
-	mFieldCount = FieldCount;
-	mType = Type;
+    mCurrentRow = new Field[FieldCount];
+    mRowCount = RowCount;
+    mFieldCount = FieldCount;
+    mType = Type;
 }
 
 QueryResult::~QueryResult()
 {
-	delete [] mCurrentRow;
-	switch(mType)
-	{
+    delete [] mCurrentRow;
+    switch(mType)
+    {
 
 #ifdef DATABASE_SUPPORT_MYSQL
 
-	case DATABASE_TYPE_MYSQL:
-		((MySQLQueryResult*)this)->Destroy();
-		break;
+    case DATABASE_TYPE_MYSQL:
+        ((MySQLQueryResult*)this)->Destroy();
+        break;
 
 #endif
 
 #ifdef DATABASE_SUPPORT_PGSQL
 
-	case DATABASE_TYPE_PGSQL:
-		((PostgreQueryResult*)this)->Destroy();
-		break;
+    case DATABASE_TYPE_PGSQL:
+        ((PostgreQueryResult*)this)->Destroy();
+        break;
 
 #endif
 
-	default:
-		assert(false);
-		break;
-	}
+    default:
+        assert(false);
+        break;
+    }
 }

@@ -8,7 +8,7 @@
 #define DATABASEENV_H
 
 /************************************************************************/
-/* Database Support Setup											   */
+/* Database Support Setup                                               */
 /************************************************************************/
 // Define the databases that you would like the server to be compiled with here.
 
@@ -31,21 +31,21 @@
 // Implementations
 
 /************************************************************************/
-/* MySQL																*/
+/* MySQL                                                                */
 /************************************************************************/
 #ifdef DATABASE_SUPPORT_MYSQL
 #include "Database/impl/MySQLDatabase.h"
 #endif
 
 /************************************************************************/
-/* PostgreSQL														   */
+/* PostgreSQL                                                           */
 /************************************************************************/
 #ifdef DATABASE_SUPPORT_PGSQL
 #include "Database/impl/PostgreDatabase.h"
 #endif
 
 /************************************************************************/
-/* Oracle 10g														   */
+/* Oracle 10g                                                           */
 /************************************************************************/
 #ifdef DATABASE_SUPPORT_ORACLE10
 //#include "Database/impl/Oracle10.h"

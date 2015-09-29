@@ -13,35 +13,35 @@
 class LogonConsoleThread : public ThreadBase
 {
 public:
-	LogonConsoleThread();
-	~LogonConsoleThread();
-	void run();
+    LogonConsoleThread();
+    ~LogonConsoleThread();
+    void run();
 };
 
 class LogonConsole :  public Singleton < LogonConsole >
 {
-	friend class LogonConsoleThread;
+    friend class LogonConsoleThread;
 
-public:						// Public methods:
-	void kill() { running = false; };
+public:                        // Public methods:
+    void kill() { running = false; };
 
-protected:					// Protected methods:
-	LogonConsoleThread *_thread;
+protected:                    // Protected methods:
+    LogonConsoleThread *_thread;
 
-	// Process one command
-	void ProcessCmd(char *cmd);
+    // Process one command
+    void ProcessCmd(char *cmd);
 
-	// quit | exit
-	void TranslateQuit(char *str);
-	void ProcessQuit(int delay);
-	void CancelShutdown(char *str);
+    // quit | exit
+    void TranslateQuit(char *str);
+    void ProcessQuit(int delay);
+    void CancelShutdown(char *str);
 
-	// help | ?
-	void TranslateHelp(char *str);
-	void ProcessHelp(char *command);
+    // help | ?
+    void TranslateHelp(char *str);
+    void ProcessHelp(char *command);
 
-	void ReloadAccts(char *str);
-	bool running;
+    void ReloadAccts(char *str);
+    bool running;
 };
 
 #define sLogonConsole LogonConsole::getSingleton()

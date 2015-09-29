@@ -66,7 +66,7 @@ enum MsTimeVariables
 #endif
 
 #define COMPILER_MICROSOFT 0
-#define COMPILER_GNU	   1
+#define COMPILER_GNU       1
 #define COMPILER_BORLAND   2
 
 #ifdef _MSC_VER
@@ -130,8 +130,8 @@ enum MsTimeVariables
 
 #if defined (__GNUC__)
 #  define GCC_VERSION (__GNUC__ * 10000 \
-					   + __GNUC_MINOR__ * 100 \
-					   + __GNUC_PATCHLEVEL__)
+                       + __GNUC_MINOR__ * 100 \
+                       + __GNUC_PATCHLEVEL__)
 #endif
 
 #if defined( __WIN32__ ) || defined( WIN32 ) || defined( _WIN32 )
@@ -144,17 +144,17 @@ enum MsTimeVariables
 #  include <string.h>
 #  define MAX_PATH 1024
 #  if defined (__GNUC__)
-#	if GCC_VERSION >= 30400
+#    if GCC_VERSION >= 30400
 #         ifdef HAVE_DARWIN
-#	      define __fastcall
+#          define __fastcall
 #         else
-#    	      define __fastcall __attribute__((__fastcall__))
+#              define __fastcall __attribute__((__fastcall__))
 #         endif
-#	else
-#	  define __fastcall __attribute__((__regparm__(3)))
-#	endif
+#    else
+#      define __fastcall __attribute__((__regparm__(3)))
+#    endif
 #  else
-#	define __fastcall __attribute__((__fastcall__))
+#    define __fastcall __attribute__((__fastcall__))
 #  endif
 #endif
 
@@ -390,12 +390,12 @@ Scripting system exports/imports
 #define for if(true) for
 
 #ifdef GNL_BIG_ENDIAN
-#  define GNL_LOWER_WORD_BYTE	4
+#  define GNL_LOWER_WORD_BYTE    4
 #else
-#  define GNL_LOWER_WORD_BYTE	0
+#  define GNL_LOWER_WORD_BYTE    0
 #endif
 
-#define GNL_LONG_AT_BYTE(x,b)	*(long *)(((char *)&x) + b)
+#define GNL_LONG_AT_BYTE(x,b)    *(long *)(((char *)&x) + b)
 #define FIST_MAGIC_QROUND (((65536.0 * 65536.0 * 16.0) + (65536.0 * 0.5)) * 65536.0)
 
 /// Fastest Method of float2int32
@@ -474,7 +474,7 @@ inline uint32 now()
 
 #ifndef WIN32
 #define FALSE   0
-#define TRUE	1
+#define TRUE    1
 #endif
 
 #ifndef WIN32
@@ -490,7 +490,7 @@ inline uint32 now()
 #pragma warning(disable:4800) 
 #pragma warning(disable:4996)
 #pragma warning(disable:4251)
-#endif	  
+#endif      
 #endif
 
 #undef INTEL_COMPILER

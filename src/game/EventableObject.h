@@ -17,41 +17,41 @@ typedef multimap<uint32, TimedEvent*> EventMap;
 
 class SERVER_DECL EventableObject
 {
-	friend class EventMgr;
-	friend class EventableObjectHolder;
+    friend class EventMgr;
+    friend class EventableObjectHolder;
 
 protected:
-	void event_RemoveEvents();
-	void event_RemoveEvents(uint32 EventType);
-	void event_ModifyTimeLeft(uint32 EventType, uint32 TimeLeft,bool unconditioned=false);
-	void event_ModifyTime(uint32 EventType, uint32 Time);
-	void event_ModifyTimeAndTimeLeft(uint32 EventType, uint32 Time);
-	bool event_HasEvent(uint32 EventType);
-	void event_RemoveByPointer(TimedEvent * ev);
-	inline int32 event_GetCurrentInstanceId() { return m_event_Instanceid; }
+    void event_RemoveEvents();
+    void event_RemoveEvents(uint32 EventType);
+    void event_ModifyTimeLeft(uint32 EventType, uint32 TimeLeft,bool unconditioned=false);
+    void event_ModifyTime(uint32 EventType, uint32 Time);
+    void event_ModifyTimeAndTimeLeft(uint32 EventType, uint32 Time);
+    bool event_HasEvent(uint32 EventType);
+    void event_RemoveByPointer(TimedEvent * ev);
+    inline int32 event_GetCurrentInstanceId() { return m_event_Instanceid; }
 
 public:
-	uint32 event_GetEventPeriod(uint32 EventType);
-	// Public methods
-	EventableObject();
-	virtual ~EventableObject();
+    uint32 event_GetEventPeriod(uint32 EventType);
+    // Public methods
+    EventableObject();
+    virtual ~EventableObject();
 
-	inline bool event_HasEvents() { return m_events.size() > 0 ? true : false; }
-	void event_AddEvent(TimedEvent * ptr);
-	void event_Relocate();
-	
-	// this func needs to be implemented by all eventable classes. use it to retreive the instance
-	// id that it needs to attach itself to.
-	
-	virtual int32 event_GetInstanceID() { return -1; }
+    inline bool event_HasEvents() { return m_events.size() > 0 ? true : false; }
+    void event_AddEvent(TimedEvent * ptr);
+    void event_Relocate();
+    
+    // this func needs to be implemented by all eventable classes. use it to retreive the instance
+    // id that it needs to attach itself to.
+    
+    virtual int32 event_GetInstanceID() { return -1; }
 
 protected:
 
-	int32 m_event_Instanceid;
-	Mutex m_lock;
-	EventMap m_events;
-	EventableObjectHolder * m_holder;
-	
+    int32 m_event_Instanceid;
+    Mutex m_lock;
+    EventMap m_events;
+    EventableObjectHolder * m_holder;
+    
 };
 
 /**
@@ -69,24 +69,24 @@ typedef set<EventableObject*> EventableObjectSet;
 class EventableObjectHolder
 {
 public:
-	EventableObjectHolder(int32 instance_id);
-	~EventableObjectHolder();
+    EventableObjectHolder(int32 instance_id);
+    ~EventableObjectHolder();
 
-	void Update(uint32 time_difference);
+    void Update(uint32 time_difference);
 
-	void AddEvent(TimedEvent * ev);
-	void AddObject(EventableObject * obj);
+    void AddEvent(TimedEvent * ev);
+    void AddObject(EventableObject * obj);
 
-	inline uint32 GetInstanceID() { return mInstanceId; }
+    inline uint32 GetInstanceID() { return mInstanceId; }
 
 protected:
-	int32 mInstanceId;
-	Mutex m_lock;
-	EventList m_events;
+    int32 mInstanceId;
+    Mutex m_lock;
+    EventList m_events;
 
-	Mutex m_insertPoolLock;
-	typedef list<TimedEvent*> InsertableQueue;
-	InsertableQueue m_insertPool;
+    Mutex m_insertPoolLock;
+    typedef list<TimedEvent*> InsertableQueue;
+    InsertableQueue m_insertPool;
 };
 
 #endif

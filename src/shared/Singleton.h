@@ -23,13 +23,13 @@ template < class type > class SERVER_DECL Singleton {
 public:
   /// Constructor
   Singleton( ) {
-	/// If you hit this assert, this singleton already exists -- you can't create another one!
-	WPAssert( mSingleton == 0 );
-	mSingleton = static_cast<type *>(this);
+    /// If you hit this assert, this singleton already exists -- you can't create another one!
+    WPAssert( mSingleton == 0 );
+    mSingleton = static_cast<type *>(this);
   }
   /// Destructor
   virtual ~Singleton( ) {
-	mSingleton = 0;
+    mSingleton = 0;
   }
 
   /// Retrieve the singleton object, if you hit this assert this singleton object doesn't exist yet

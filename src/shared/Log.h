@@ -63,10 +63,10 @@ public:
 class SessionLogWriter : public TextLogger
 {
 public:
-	SessionLogWriter(const char * filename, bool open) : TextLogger(filename, open) {}
+    SessionLogWriter(const char * filename, bool open) : TextLogger(filename, open) {}
 
-	void write(const char* format, ...);
-	void writefromsession(WorldSession* session, const char* format, ...);
+    void write(const char* format, ...);
+    void writefromsession(WorldSession* session, const char* format, ...);
 };
 
 extern SessionLogWriter * Anticheat_Log;
@@ -79,16 +79,16 @@ extern SessionLogWriter * GMCommand_Log;
 class WorldLog : public Singleton<WorldLog>
 {
 public:
-	WorldLog();
-	~WorldLog();
+    WorldLog();
+    ~WorldLog();
 
-	void LogPacket(uint32 len, uint16 opcode, const uint8* data, uint8 direction);
-	void Enable();
-	void Disable();
+    void LogPacket(uint32 len, uint16 opcode, const uint8* data, uint8 direction);
+    void Enable();
+    void Disable();
 private:
-	Mutex mutex;
-	bool bEnabled;
-	TextLogger * log;
+    Mutex mutex;
+    bool bEnabled;
+    TextLogger * log;
 };
 
 #define sWorldLog WorldLog::getSingleton()
