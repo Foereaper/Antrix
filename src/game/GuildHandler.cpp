@@ -6,6 +6,17 @@
 
 #include "StdAfx.h"
 
+/**
+ * CMSG_GUILD_QUERY
+ *
+ * uint32 guildId
+ *
+ * SMSG_GUILD_COMMAND_RESULT
+ *
+ * uint32 cmd
+ * const std::string& str
+ * uint32 cmdResult
+ */
 void WorldSession::HandleGuildQuery(WorldPacket & recv_data)
 {
     CHECK_PACKET_SIZE(recv_data, 4);

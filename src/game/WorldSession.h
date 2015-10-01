@@ -601,6 +601,7 @@ public:
     void HandleInspectHonorStatsOpcode(WorldPacket &recv_data);
     void HandlePVPLogDataOpcode(WorldPacket &recv_data);
     void HandleBattlefieldListOpcode(WorldPacket &recv_data);
+    void HandleWorldTeleportOpcode(WorldPacket& recv_data);
 
     void HandleSetActionBarTogglesOpcode(WorldPacket &recvPacket);
     void HandleMoveSplineCompleteOpcode(WorldPacket &recvPacket);

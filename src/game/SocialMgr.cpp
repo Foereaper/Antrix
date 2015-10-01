@@ -47,7 +47,8 @@ void SocialMgr::SendFriendList(Player* plr)
     if(!plr)
         return;
 
-    WorldPacket data( SMSG_FRIEND_LIST , 512 );
+    // @ TODO Fix SMSG_IGNORE_LIST
+    /*WorldPacket data( SMSG_FRIEND_LIST , 512 );
     uint64 plrguid = plr->GetGUID();
 
     std::map<uint64, std::set<uint64>*>::iterator fItr = m_hasInFriendList.find(plrguid);
@@ -75,7 +76,7 @@ void SocialMgr::SendFriendList(Player* plr)
             data << uint8(0);
     }
 
-    plr->GetSession()->SendPacket( &data );
+    plr->GetSession()->SendPacket( &data );*/
 }
 
 void SocialMgr::SendIgnoreList(Player* plr)
@@ -83,7 +84,8 @@ void SocialMgr::SendIgnoreList(Player* plr)
     if(!plr)
         return;
 
-    WorldPacket data( SMSG_IGNORE_LIST, 512 );
+    // @ TODO Fix SMSG_IGNORE_LIST
+   /* WorldPacket data( SMSG_IGNORE_LIST, 512 );
     uint64 plrguid = plr->GetGUID();
 
     std::map<uint64, std::set<uint64>*>::iterator iItr;
@@ -105,7 +107,7 @@ void SocialMgr::SendIgnoreList(Player* plr)
         data << uint64(*itr);
     }
 
-    plr->GetSession()->SendPacket( &data );
+    plr->GetSession()->SendPacket( &data );*/
 }
 
 void SocialMgr::SendUpdateToFriends(Player* plr)

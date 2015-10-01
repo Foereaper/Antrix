@@ -208,6 +208,24 @@ void WorldSession::HandlePetInfo(WorldPacket & recv_data)
     sLog.outDebug("HandlePetInfo is called");
 }
 
+/**
+ * CMSG_PET_NAME_QUERY
+ *
+ * uint32 petNumber
+ * uint64 petGuid
+ *
+ * SMSG_PET_NAME_QUERY_RESPONSE
+ *
+ * uint32 petNumber
+ * std::string name
+ * uint32 pPet->GetUInt32Value(UNIT_FIELD_PET_NAME_TIMESTAMP)
+ * // Retrieve declined names
+ *     uint8 unk (1)
+ *     std::string names
+ * else
+ *     uint8 unk2 (0)
+ *
+ */
 void WorldSession::HandlePetNameQuery(WorldPacket & recv_data)
 {
     if(!_player->IsInWorld()) return;

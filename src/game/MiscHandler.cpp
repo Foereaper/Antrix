@@ -1731,3 +1731,13 @@ void WorldSession::HandleDismountOpcode(WorldPacket& recv_data)
         _player->RemoveAura( _player->m_MountSpellId );
 }
 
+/**
+ * CMSG_WORLD_TELEPORT
+ *
+ * uint32 time, mapId
+ * float x, y, z, o
+ */
+void WorldSession::HandleWorldTeleportOpcode(WorldPacket& recv_data)
+{
+}
+

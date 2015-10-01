@@ -1385,9 +1385,10 @@ void Aura::SpellAuraDummy(bool apply)
                 pCaster->m_noInterrupt = 1;
                 pCaster->SetFlag(UNIT_FIELD_FLAGS, U_FIELD_FLAG_LOCK_PLAYER);
 
-                WorldPacket data(SMSG_DEATH_NOTIFY_OBSOLETE, 10);
-                data << m_target->GetNewGUID() << uint8(0);
-                pCaster->GetSession()->SendPacket(&data);
+                //@ TODO FIX SMSG_DEATH_NOTIFY_OBSOLETE
+                //WorldPacket data(SMSG_DEATH_NOTIFY_OBSOLETE, 10);
+                //data << m_target->GetNewGUID() << uint8(0);
+                //pCaster->GetSession()->SendPacket(&data);
             }
             else
             {
@@ -1402,9 +1403,10 @@ void Aura::SpellAuraDummy(bool apply)
                 pCaster->m_noInterrupt = 0;
                 pCaster->RemoveFlag(UNIT_FIELD_FLAGS, U_FIELD_FLAG_LOCK_PLAYER);
 
-                WorldPacket data(SMSG_DEATH_NOTIFY_OBSOLETE, 10);
-                data << pCaster->GetNewGUID() << uint8(1);
-                pCaster->GetSession()->SendPacket(&data);
+                //@ TODO FIX SMSG_DEATH_NOTIFY_OBSOLETE
+                //WorldPacket data(SMSG_DEATH_NOTIFY_OBSOLETE, 10);
+                //data << pCaster->GetNewGUID() << uint8(1);
+                //pCaster->GetSession()->SendPacket(&data);
             }
         }break;
     case 570:   // far sight
@@ -1487,10 +1489,11 @@ void Aura::SpellAuraDummy(bool apply)
             if(result > 0)
             {
                 // hack!
-                WorldPacket data(SMSG_CAST_RESULT, 6);
-                data << m_spellProto->Id;
-                data << (uint8)result;
-                plyr->GetSession()->SendPacket(&data);
+                //@ TODO FIX SMSG_CAST_RESULT
+                //WorldPacket data(SMSG_CAST_RESULT, 6);
+                //data << m_spellProto->Id;
+                //data << (uint8)result;
+                //plyr->GetSession()->SendPacket(&data);
                 return;
             }
 
@@ -1649,7 +1652,8 @@ void Aura::SpellAuraModFear(bool apply)
             m_target->SetFlag(UNIT_FIELD_FLAGS, U_FIELD_FLAG_LOCK_PLAYER);
             m_target->setAItoUse(true);
             WorldPacket data1(9);
-            data1.Initialize(SMSG_DEATH_NOTIFY_OBSOLETE);
+            //@ TODO FIX SMSG_DEATH_NOTIFY_OBSOLETE
+            //data1.Initialize(SMSG_DEATH_NOTIFY_OBSOLETE);
             data1 << m_target->GetNewGUID() << uint8(0x00); //block player movement ?
             static_cast<Player*>(m_target)->GetSession()->SendPacket(&data1);
         }
@@ -1665,7 +1669,8 @@ void Aura::SpellAuraModFear(bool apply)
             m_target->GetAIInterface()->StopMovement(1);
             m_target->setAItoUse(false);
             WorldPacket data1(9);
-            data1.Initialize(SMSG_DEATH_NOTIFY_OBSOLETE);
+            //@ TODO FIX SMSG_DEATH_NOTIFY_OBSOLETE
+            //data1.Initialize(SMSG_DEATH_NOTIFY_OBSOLETE);
             data1 << m_target->GetNewGUID() << uint8(0x01); //enable player movement ?
             static_cast<Player*>(m_target)->GetSession()->SendPacket(&data1);
         }

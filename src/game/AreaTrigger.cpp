@@ -116,8 +116,8 @@ void WorldSession::_HandleAreaTriggerOpcode(uint32 id)
                 if(pMapinfo && pMapinfo->HasFlag(WMI_INSTANCE_XPACK_01) && !HasFlag(ACCOUNT_FLAG_XPACK_01))
                 {
                     WorldPacket msg;
-                    msg.Initialize(SMSG_BROADCAST_MSG);
-                    msg << uint32(3) << "You must have The Burning Crusade Expansion to access this content." << uint8(0);
+                    msg.Initialize(SMSG_AREA_TRIGGER_MESSAGE);
+                    msg << uint32(0) << "You must have The Burning Crusade Expansion to access this content." << uint8(0) << uint8(0);
                     SendPacket(&msg);
                     return;
                 }
@@ -244,8 +244,8 @@ void WorldSession::_HandleAreaTriggerOpcode(uint32 id)
             if(pMapinfo && pMapinfo->HasFlag(WMI_INSTANCE_XPACK_01) && !HasFlag(ACCOUNT_FLAG_XPACK_01))
             {
                 WorldPacket msg;
-                msg.Initialize(SMSG_BROADCAST_MSG);
-                msg << uint32(3) << "You must have The Burning Crusade Expansion to access this content." << uint8(0);
+                msg.Initialize(SMSG_AREA_TRIGGER_MESSAGE);
+                msg << uint32(0) << "You must have The Burning Crusade Expansion to access this content." << uint8(0) << uint8(0);
                 SendPacket(&msg);
                 return;
             }

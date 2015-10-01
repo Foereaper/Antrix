@@ -371,6 +371,12 @@ void WorldSession::HandleQuestlogRemoveQuestOpcode(WorldPacket& recvPacket)
     GetPlayer()->UpdateNearbyGameObjects();
 }
 
+/**
+ * CMSG_QUEST_QUERY
+ *
+ * uint32 questId
+ *
+ */
 void WorldSession::HandleQuestQueryOpcode( WorldPacket & recv_data )
 {
     if(!_player->IsInWorld()) return;

@@ -1871,6 +1871,8 @@ void Spell::finish()
 
 void Spell::SendCastResult(int16 result)
 {
+    //@ TODO FIX SendCastResult
+    /*
     StackWorldPacket<9> data(SMSG_CAST_RESULT);
     if(result != -1)
         failed = true;
@@ -1896,7 +1898,7 @@ void Spell::SendCastResult(int16 result)
     else
     {
         // result packet sent in handleeffects()
-    }
+    }*/
 }
 
 void Spell::SendSpellStart()
@@ -3402,16 +3404,17 @@ void Spell::SendHealSpellOnPlayer(Player* caster, Player* target, uint32 dmg,boo
 {
     if(!caster || !target)
         return;
-    WorldPacket data(SMSG_HEALSPELL_ON_PLAYER_OBSOLETE, 27);
+    //@ TODO FIX SMSG_HEALSPELL_ON_PLAYER_OBSOLETE
+    //WorldPacket data(SMSG_HEALSPELL_ON_PLAYER_OBSOLETE, 27);
     // Bur: I know it says obsolete, but I just logged this tonight and got this packet.
     
-    data << target->GetNewGUID();
-    data << caster->GetNewGUID();
-    data << uint32(m_spellInfo->Id);
-    data << uint32(dmg);    // amt healed
-    data << uint8(critical);     //this is crical message
+    //data << target->GetNewGUID();
+    //data << caster->GetNewGUID();
+    //data << uint32(m_spellInfo->Id);
+    //data << uint32(dmg);    // amt healed
+    //data << uint8(critical);     //this is crical message
 
-    caster->SendMessageToSet(&data, true);
+    //caster->SendMessageToSet(&data, true);
 }
 
 void Spell::Heal(int32 amount)
@@ -3794,11 +3797,12 @@ void Spell::SendCastSuccess(Object * target)
     if(!plr)
         return;
 
-    WorldPacket data(SMSG_TARGET_CAST_RESULT, 13);
-    data << ((target != 0) ? target->GetNewGUID() : uint8(0));
-    data << m_spellInfo->Id;
+    //@ TODO FIX SMSG_TARGET_CAST_RESULT
+    //WorldPacket data(SMSG_TARGET_CAST_RESULT, 13);
+    //data << ((target != 0) ? target->GetNewGUID() : uint8(0));
+    //data << m_spellInfo->Id;
     
-    plr->GetSession()->SendPacket(&data);
+    //plr->GetSession()->SendPacket(&data);
 }
 
 void Spell::SendCastSuccess(const uint64& guid)
@@ -3814,7 +3818,8 @@ void Spell::SendCastSuccess(const uint64& guid)
     uint32 c = FastGUIDPack(guid, buffer, 0);
     *(uint32*)&buffer[c] = m_spellInfo->Id;            c += 4;
 
-    plr->GetSession()->OutPacket(SMSG_TARGET_CAST_RESULT, c, buffer);
+    //@ TODO FIX SMSG_TARGET_CAST_RESULT
+    //plr->GetSession()->OutPacket(SMSG_TARGET_CAST_RESULT, c, buffer);
 }
 
 

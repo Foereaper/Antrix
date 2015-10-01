@@ -203,10 +203,11 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
 
         if(GetPlayer()->m_currentSpell && GetCastTime(sCastTime.LookupEntry(spellInfo->CastingTimeIndex)))
         {
-            StackWorldPacket<9> data(SMSG_CAST_RESULT);
+            //@ TODO FIX HandleCastSpellOpcode
+            /*StackWorldPacket<9> data(SMSG_CAST_RESULT);
             data << spellInfo->Id;
             data << (uint8)SPELL_FAILED_SPELL_IN_PROGRESS;
-            _player->GetSession()->SendPacket(&data);
+            _player->GetSession()->SendPacket(&data);*/
             return;
 
         }

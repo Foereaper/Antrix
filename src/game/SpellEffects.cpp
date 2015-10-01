@@ -2047,9 +2047,10 @@ void Spell::SpellEffectLearnPetSpell(uint32 i)
         }        
 
         // Send Packet
-        WorldPacket data(SMSG_PET_LEARNT_SPELL, 21);
-        data << pPet->GetGUID() << uint8(0) << uint32(m_spellInfo->EffectTriggerSpell[i]) << uint32(-1) << uint32(0);
-        p_caster->GetSession()->SendPacket(&data);
+        //@ TODO FIX SMSG_PET_LEARNT_SPELL
+        //WorldPacket data(SMSG_PET_LEARNT_SPELL, 21);
+        //data << pPet->GetGUID() << uint8(0) << uint32(m_spellInfo->EffectTriggerSpell[i]) << uint32(-1) << uint32(0);
+        //p_caster->GetSession()->SendPacket(&data);
     }
 }
 

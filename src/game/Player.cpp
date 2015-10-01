@@ -2961,9 +2961,10 @@ void Player::OnPushToWorld()
     m_lockTransportVariables = false;
 
     // delay the unlock movement packet
-    WorldPacket * data = new WorldPacket(SMSG_MOVE_UNLOCK_MOVEMENT, 4);
-    *data << uint32(0);
-    delayedPackets.add(data);
+    //@ TODO FIX SMSG_MOVE_UNLOCK_MOVEMENT
+    //WorldPacket * data = new WorldPacket(SMSG_MOVE_UNLOCK_MOVEMENT, 4);
+    //*data << uint32(0);
+    //delayedPackets.add(data);
     sWorld.mInWorldPlayerCount++;
 
     // Update PVP Situation
@@ -3422,7 +3423,8 @@ void Player::SetPlayerSpeed(uint8 SpeedType, float value)
             if(value == m_lastFlySpeed)
                 return;
 
-            data.SetOpcode(SMSG_FORCE_MOVE_SET_FLY_SPEED);
+            //@ TODO FIX SMSG_FORCE_MOVE_SET_FLY_SPEED
+            //data.SetOpcode(SMSG_FORCE_MOVE_SET_FLY_SPEED);
             m_flySpeed = value;
             m_lastFlySpeed = value;
         }break;
@@ -3515,9 +3517,10 @@ void Player::RepopRequestedPlayer()
     SpawnCorpseBody();
 
     /* Send Spirit Healer Location */
-    WorldPacket data(SMSG_SPIRIT_HEALER_POS, 16);
-    data << m_mapId << m_position;
-    m_session->SendPacket(&data);
+    //@ TODO FIX SMSG_SPIRIT_HEALER_POS
+    //WorldPacket data(SMSG_SPIRIT_HEALER_POS, 16);
+    //data << m_mapId << m_position;
+    //m_session->SendPacket(&data);
 }
 
 void Player::ResurrectPlayer()
@@ -5167,13 +5170,14 @@ bool Player::CanShootRangedWeapon(uint32 spellid, Unit *target, bool autoshot)
 
     if(fail)// && fail != SPELL_FAILED_OUT_OF_RANGE)
     {
-        WorldPacket data(SMSG_CAST_RESULT, 12);
+        //@ TODO FIX SMSG_CAST_RESULT
+        /*WorldPacket data(SMSG_CAST_RESULT, 12);
         if(autoshot)
             data << uint32(75);
         else 
             data << uint32(spellid);
         data << fail ;        // we want to send a cast result for AUTOSHOT, as thats what the client sees as being cast.
-        GetSession()->SendPacket(&data);
+        GetSession()->SendPacket(&data);*/
         return false;
     }
     return true;
@@ -6747,9 +6751,10 @@ bool Player::SafeTeleport(uint32 MapID, uint32 InstanceID, const LocationVector 
     MapInfo * mi = WorldMapInfoStorage.LookupEntry(MapID);
     if(mi && mi->flags & WMI_INSTANCE_XPACK_01 && !m_session->HasFlag(ACCOUNT_FLAG_XPACK_01))
     {
-        WorldPacket msg(SMSG_BROADCAST_MSG, 50);
-        msg << uint32(3) << "You must have The Burning Crusade Expansion to access this content." << uint8(0);
-        m_session->SendPacket(&msg);
+        //@ TODO FIX SMSG_BROADCAST_MSG
+        //WorldPacket msg(SMSG_BROADCAST_MSG, 50);
+        //msg << uint32(3) << "You must have The Burning Crusade Expansion to access this content." << uint8(0);
+        //m_session->SendPacket(&msg);
         return false;
     }
 
@@ -7246,16 +7251,17 @@ void Player::OnWorldPortAck()
         }
         if(pMapinfo->type == INSTANCE_NONRAID || pMapinfo->type == INSTANCE_MULTIMODE && iInstanceType == MODE_NORMAL)
         {
-            data.SetOpcode(SMSG_INSTANCE_RESET_ACTIVATE);
-            data << uint32(0x00);
-            GetSession()->SendPacket(&data);
+            //@ TODO FIX SMSG_INSTANCE_RESET_ACTIVATE
+            //data.SetOpcode(SMSG_INSTANCE_RESET_ACTIVATE);
+            //data << uint32(0x00);
+            //GetSession()->SendPacket(&data);
 
             sInstanceSavingManager.SavePlayerToInstance(this, pMapinfo->mapid);
         } else if(pMapinfo->type == INSTANCE_NULL)
         {
-            data.SetOpcode(SMSG_INSTANCE_RESET_ACTIVATE);
-            data << uint32(0x01);
-            GetSession()->SendPacket(&data);
+            //data.SetOpcode(SMSG_INSTANCE_RESET_ACTIVATE);
+            //data << uint32(0x01);
+            //GetSession()->SendPacket(&data);
         }
     }
 
@@ -7705,7 +7711,8 @@ void Player::UpdateComboPoints()
     else
         buffer[0] = buffer[1] = 0;
 
-    m_session->OutPacket(SMSG_SET_COMBO_POINTS, c, buffer);
+    //@ TODO FIX SMSG_SET_COMBO_POINTS
+    //m_session->OutPacket(SMSG_SET_COMBO_POINTS, c, buffer);
 }
 
 Unit *Player::GetSoloSpellTarget(uint32 spell_id)
@@ -7874,9 +7881,10 @@ void Player::Possess(Unit * pTarget)
     SetFlag(UNIT_FIELD_FLAGS, U_FIELD_FLAG_LOCK_PLAYER);
     
     /* send "switch mover" packet */
-    WorldPacket data1(SMSG_DEATH_NOTIFY_OBSOLETE, 10);        /* burlex: this should be renamed SMSG_SWITCH_ACTIVE_MOVER :P */
-    data1 << pTarget->GetNewGUID() << uint8(1);
-    m_session->SendPacket(&data1);
+    //@ TODO FIX SMSG_DEATH_NOTIFY_OBSOLETE
+    //WorldPacket data1(SMSG_DEATH_NOTIFY_OBSOLETE, 10);        /* burlex: this should be renamed SMSG_SWITCH_ACTIVE_MOVER :P */
+    //data1 << pTarget->GetNewGUID() << uint8(1);
+    //m_session->SendPacket(&data1);
 
     /* update target faction set */
     pTarget->_setFaction();
@@ -7947,13 +7955,14 @@ void Player::UnPossess()
     pTarget->UpdateOppFactionSet();
 
     /* send "switch mover" packet */
-    WorldPacket data(SMSG_DEATH_NOTIFY_OBSOLETE, 10);
-    data << GetNewGUID() << uint8(1);
-    m_session->SendPacket(&data);
+    //@ TODO FIX SMSG_DEATH_NOTIFY_OBSOLETE
+    //WorldPacket data(SMSG_DEATH_NOTIFY_OBSOLETE, 10);
+    //data << GetNewGUID() << uint8(1);
+    //m_session->SendPacket(&data);
 
-    data.Initialize(SMSG_PET_SPELLS);
-    data << uint64(0);
-    m_session->SendPacket(&data);
+    //data.Initialize(SMSG_PET_SPELLS);
+    //data << uint64(0);
+    //m_session->SendPacket(&data);
 }
 
 //what is an Immobilize spell ? Have to add it later to spell effect handler

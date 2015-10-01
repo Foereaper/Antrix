@@ -122,7 +122,8 @@ void WorldSession::HandleGroupAcceptOpcode( WorldPacket & recv_data )
     {
         grp->AddMember(_player);
         _player->iInstanceType = grp->GetLeader()->iInstanceType;
-        _player->GetSession()->OutPacket(CMSG_DUNGEON_DIFFICULTY, 4, &grp->GetLeader()->iInstanceType);
+        // @TODO Fix Dungeon Difficulty
+        //_player->GetSession()->OutPacket(CMSG_DUNGEON_DIFFICULTY, 4, &grp->GetLeader()->iInstanceType);
         sInstanceSavingManager.ResetSavedInstancesForPlayer(_player);
         return;
     }
@@ -132,7 +133,8 @@ void WorldSession::HandleGroupAcceptOpcode( WorldPacket & recv_data )
     grp->AddMember(player);        // add the inviter first, therefore he is the leader
     grp->AddMember(_player);       // add us.
     _player->iInstanceType = player->iInstanceType;
-    _player->GetSession()->OutPacket(CMSG_DUNGEON_DIFFICULTY, 4, &player->iInstanceType);
+    // @TODO Fix Dungeon Difficulty
+    //_player->GetSession()->OutPacket(CMSG_DUNGEON_DIFFICULTY, 4, &player->iInstanceType);
     sInstanceSavingManager.ResetSavedInstancesForPlayer(_player);
 
     // Currentgroup and all that shit are set by addmember.
@@ -314,12 +316,13 @@ void WorldSession::HandleSetPlayerIconOpcode(WorldPacket& recv_data)
     if(icon == 0xFF)
     {
         // client request
-        WorldPacket data(MSG_GROUP_SET_PLAYER_ICON, 73);
+        // @TODO Fix HandleSetPlayerIconOpcode (if still exists)
+        /*WorldPacket data(MSG_GROUP_SET_PLAYER_ICON, 73);
         data << uint8(1);
         for(uint8 i = 0; i < 8; ++i)
             data << i << pGroup->m_targetIcons[i];
 
-        SendPacket(&data);
+        SendPacket(&data);*/
     }
     else if(_player->IsGroupLeader())
     {
@@ -328,11 +331,12 @@ void WorldSession::HandleSetPlayerIconOpcode(WorldPacket& recv_data)
             return;            // whhopes,buffer overflow :p
 
         // setting icon
-        WorldPacket data(MSG_GROUP_SET_PLAYER_ICON, 10);
+        // @TODO Fix HandleSetPlayerIconOpcode (if still exists)
+        /*WorldPacket data(MSG_GROUP_SET_PLAYER_ICON, 10);
         data << uint8(0) << icon << guid;
         pGroup->SendPacketToAll(&data);
 
-        pGroup->m_targetIcons[icon] = guid;
+        pGroup->m_targetIcons[icon] = guid;*/
     }
 }
 

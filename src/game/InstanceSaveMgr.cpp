@@ -41,13 +41,14 @@ void InstanceSavingManagement::BuildSavedInstancesForPlayer(Player *pPlayer)
         result = p->FindPlayer(pPlayer->GetGUID(), (uint32)NULL, MODE_NORMAL); //find only non grouped results
         if(result)
         {
-            data.Initialize(SMSG_INSTANCE_SAVE);
+            // @TODO FIX BuildSavedInstancesForPlayer
+            /*data.Initialize(SMSG_INSTANCE_SAVE);
             data << uint32(itr->first);
             pPlayer->GetSession()->SendPacket(&data);
 
             data.Initialize(SMSG_INSTANCE_RESET_ACTIVATE);
             data << uint32(0x01);
-            pPlayer->GetSession()->SendPacket(&data);
+            pPlayer->GetSession()->SendPacket(&data);*/
 
             hasBeenSaved = true;
         }
@@ -56,9 +57,10 @@ void InstanceSavingManagement::BuildSavedInstancesForPlayer(Player *pPlayer)
 
     if(!hasBeenSaved)
     {
-        data.Initialize(SMSG_INSTANCE_RESET_ACTIVATE);
-        data << uint32(0x00);
-        pPlayer->GetSession()->SendPacket(&data);
+        // @TODO FIX BuildSavedInstancesForPlayer
+        //data.Initialize(SMSG_INSTANCE_RESET_ACTIVATE);
+        //data << uint32(0x00);
+        //pPlayer->GetSession()->SendPacket(&data);
     }
 }
 
@@ -122,13 +124,14 @@ void InstanceSavingManagement::SavePlayerToInstance(Player *pPlayer, uint32 mapi
 
                 if(!pPlayer->InGroup())
                 {
-                    data.Initialize(SMSG_INSTANCE_SAVE);
+                    // @TODO Fix SavePlayerToInstance
+                    /*data.Initialize(SMSG_INSTANCE_SAVE);
                     data << mapid;
                     pPlayer->GetSession()->SendPacket(&data);
 
                     data.Initialize(SMSG_INSTANCE_RESET_ACTIVATE);
                     data << uint32(0x01);
-                    pPlayer->GetSession()->SendPacket(&data);
+                    pPlayer->GetSession()->SendPacket(&data);*/
                 }
             }
         }
@@ -157,9 +160,10 @@ void InstanceSavingManagement::ResetSavedInstancesForPlayer(Player *pPlayer)
         
         if(result)
         {
-            data.Initialize(SMSG_RESET_INSTANCE);
-            data << itr->first;
-            pPlayer->GetSession()->SendPacket(&data);
+            // @ TODO FIX ResetSavedInstancesForPlayer
+            //data.Initialize(SMSG_RESET_INSTANCE);
+            //data << itr->first;
+            //pPlayer->GetSession()->SendPacket(&data);
         }
     }
     instanceInfoListMutex.Release();

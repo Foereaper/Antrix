@@ -2744,7 +2744,8 @@ void Unit::VampiricEmbrace(uint32 dmg,Unit* tgt)
     uint32 heal = (dmg*perc) / 100;
 
     WorldPacket data;
-    data.SetOpcode(SMSG_HEALSPELL_ON_PLAYER_OBSOLETE);
+    //@ TODO FIX VampiricEmbrace?
+    //data.SetOpcode(SMSG_HEALSPELL_ON_PLAYER_OBSOLETE);
     
     data << this->GetNewGUID();
     data << this->GetNewGUID();
@@ -2963,8 +2964,9 @@ void Unit::SetStandState(uint8 standstate)
     if(standstate == STANDSTATE_STAND)//standup
         RemoveAurasByInterruptFlag(AURA_INTERRUPT_ON_STAND_UP);
 
-    if(m_objectTypeId == TYPEID_PLAYER)
-        ((Player*)this)->GetSession()->OutPacket(SMSG_STANDSTATE_CHANGE_ACK, 1, &standstate);
+    //@ TODO FIX SetStandState
+    //if(m_objectTypeId == TYPEID_PLAYER)
+        //((Player*)this)->GetSession()->OutPacket(SMSG_STANDSTATE_CHANGE_ACK, 1, &standstate);
 }
 
 void Unit::RemoveAurasByInterruptFlag(uint32 flag)
@@ -3566,6 +3568,8 @@ void Unit::RemoveAurasOfSchool(uint32 School, bool Positive)
 
 void Unit::EnableFlight(bool delay /* = false */)
 {
+    //@ TODO FIX EnableFlight
+    /*
     if(!delay || m_objectTypeId != TYPEID_PLAYER)
     {
         WorldPacket data(SMSG_MOVE_SET_FLY, 13);
@@ -3580,11 +3584,13 @@ void Unit::EnableFlight(bool delay /* = false */)
         *data << uint32(2);
         SendMessageToSet(data, false);
         static_cast<Player*>(this)->delayedPackets.add(data);
-    }
+    }*/
 }
 
 void Unit::DisableFlight(bool delay /* = false */)
 {
+    //@ TODO FIX DisableFlight
+    /*
     if(!delay || m_objectTypeId != TYPEID_PLAYER)
     {
         WorldPacket data(SMSG_MOVE_SET_UNFLY, 13);
@@ -3599,7 +3605,7 @@ void Unit::DisableFlight(bool delay /* = false */)
         *data << uint32(5);
         SendMessageToSet(data, false);
         static_cast<Player*>(this)->delayedPackets.add(data);
-    }
+    }*/
 }
 
 bool Unit::IsDazed()

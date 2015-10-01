@@ -435,14 +435,7 @@ bool WorldSession::PlayerLogin(uint32 playerGuid, uint32 forced_map_id, uint32 f
     movement_packet[0] = m_MoverWoWGuid.GetNewGuidMask();
     memcpy(&movement_packet[1], m_MoverWoWGuid.GetNewGuid(), m_MoverWoWGuid.GetNewGuidLen());
 
-    StackWorldPacket<20> datab(CMSG_DUNGEON_DIFFICULTY);
-    datab << plr->iInstanceType;
-    datab << uint32(0x01);
-    datab << uint32(0x00);
-    SendPacket(&datab);
-
-    /* world preload */
-    datab.Initialize(SMSG_LOGIN_VERIFY_WORLD);
+    StackWorldPacket<20> datab(SMSG_LOGIN_VERIFY_WORLD);
     datab << plr->GetMapId();
     datab << plr->GetPositionX()
         << plr->GetPositionY()  
@@ -475,7 +468,7 @@ bool WorldSession::PlayerLogin(uint32 playerGuid, uint32 forced_map_id, uint32 f
     }
 
     // account data == UI config
-    StackWorldPacket<128> data(SMSG_ACCOUNT_DATA_MD5);
+    StackWorldPacket<128> data(SMSG_ACCOUNT_DATA_TIMES);
 
     for (int i = 0; i < 8; i++)
     {

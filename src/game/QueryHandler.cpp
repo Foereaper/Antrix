@@ -207,6 +207,21 @@ void WorldSession::HandleCorpseQueryOpcode(WorldPacket &recv_data)
     }
 }
 
+/**
+ * CMSG_PAGE_TEXT_QUERY
+ *
+ * uint32 pageId
+ *
+ * SMSG_PAGE_TEXT_QUERY_RESPONSE
+ *
+ * uint32 pageId
+ * if (!page)
+ *     std::string text
+ *     uint32 unk (0)
+ * else
+ *     std::string text
+ *     uint32 nextPage
+ */
 void WorldSession::HandlePageTextQueryOpcode( WorldPacket & recv_data )
 {
     CHECK_PACKET_SIZE(recv_data, 4);

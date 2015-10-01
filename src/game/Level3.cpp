@@ -1544,10 +1544,11 @@ bool ChatHandler::HandleFlySpeedCheatCommand(const char* args, WorldSession* m_s
     BlueSystemMessage(m_session, "Setting the fly speed of %s to %f.", plr->GetName(), Speed);
     GreenSystemMessage(plr->GetSession(), "%s set your fly speed to %f.", m_session->GetPlayer()->GetName(), Speed);
     
-    WorldPacket data(SMSG_FORCE_MOVE_SET_FLY_SPEED, 16);
+    // @TODO FIX HandleFlySpeedCheatCommand
+    /*WorldPacket data(SMSG_FORCE_MOVE_SET_FLY_SPEED, 16);
     data << plr->GetNewGUID();
     data << uint32(0) << Speed;
-    plr->SendMessageToSet(&data, true);
+    plr->SendMessageToSet(&data, true);*/
     
     plr->m_flySpeed = Speed;
     
@@ -1949,10 +1950,11 @@ bool ChatHandler::HandleUnlockMovementCommand(const char* args, WorldSession* m_
     if(!plr) return true;
 
     GreenSystemMessage(m_session, "Unlocking movement.");
-    WorldPacket data(50);
+    // @TODO FIX HandleUnlockMovementCommand
+    /*WorldPacket data(50);
     data.SetOpcode(SMSG_MOVE_UNLOCK_MOVEMENT);
     data << uint32(0);
-    plr->GetSession()->SendPacket(&data);
+    plr->GetSession()->SendPacket(&data);*/
 
     plr->SetMovement(MOVE_UNROOT, 1);
     return true;
