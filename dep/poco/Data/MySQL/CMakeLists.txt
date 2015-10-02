@@ -11,6 +11,11 @@ POCO_HEADERS_AUTO( MYSQL_SRCS ${HDRS_G})
 
 add_definitions(-DTHREADSAFE -DNO_TCL)
 
+if(WIN32)
+    # Required definitions for MySQL inclusion on Windows when compiling as embedded library
+    add_definitions(-DEMBEDDED_LIBRARY -DCHECK_EMBEDDED_DIFFERENCES)
+endif()
+
 add_library( "${LIBNAME}" ${LIB_MODE} ${MYSQL_SRCS} )
 add_library( "${POCO_LIBNAME}" ALIAS "${LIBNAME}")
 set_target_properties( "${LIBNAME}"

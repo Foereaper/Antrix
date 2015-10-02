@@ -19,7 +19,6 @@
 #ifndef MySQL_MySQL_INCLUDED
 #define MySQL_MySQL_INCLUDED
 
-
 #include "Poco/Foundation.h"
 
 

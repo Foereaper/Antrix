@@ -44,10 +44,6 @@ if(NOT MSVC_IDE)
   message(STATUS "Setting Poco build type - ${CMAKE_BUILD_TYPE}")
 endif()
 
-if (CMAKE_BUILD_TYPE STREQUAL "")
-    set( CMAKE_BUILD_TYPE "RelWithDebInfo" )
-endif ()
-
 # http://www.cmake.org/Wiki/CMake_Useful_Variables :
 # CMAKE_BUILD_TYPE
 #    Choose the type of build. CMake has default flags for these:
@@ -72,7 +68,7 @@ set(ENABLE_NET ON)
 set(ENABLE_NETSSL ON)
 set(ENABLE_CRYPTO ON)
 set(ENABLE_DATA ON)
-set(ENABLE_DATA_MYSQL OFF)
+set(ENABLE_DATA_MYSQL ON)
 set(FORCE_OPENSSL ON)
 set(POCO_STATIC ON)
 
@@ -183,29 +179,6 @@ if(ENABLE_DATA)
 add_subdirectory(Data)
 list(APPEND Poco_COMPONENTS "Data")
 endif()
-
-#############################################################
-# Uninstall stuff see: http://www.vtk.org/Wiki/CMake_FAQ
-configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-  IMMEDIATE @ONLY)
-
-add_custom_target(uninstall
-  "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
-
-#############################################################
-# Enable packaging
-
-include(InstallRequiredSystemLibraries)
-
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Poco Libraries")
-set(CPACK_PACKAGE_VENDOR "Applied Informatics Software Engineering GmbH")
-set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "/usr/local")
-
-include(CPack)
 
 #############################################################
 # cmake config files 
